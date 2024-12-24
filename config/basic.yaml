@@ -1,0 +1,80 @@
+defaults:
+  - model
+  - dataset
+  - augmentation
+
+hydra:
+  run:
+    dir: .
+
+logfile: 'training_seanet.log'
+
+device: 'cpu'
+
+attack_type: 0
+micro: 2
+sigma: 3
+
+adv:
+  adv_starts_from: 0
+  update_d_every: 1
+
+# wandb
+project_name: "watermark"
+experiment_name: "original"
+scenario_name: "None"
+seed: 0
+
+path:
+  wm_speech: ./outputs/wav/${experiment_name}
+  ckpt: ./outputs/ckpt/${experiment_name}
+  finetune_ckpt: "./results/ckpt/finetune_ckpt"
+  log_dir: outputs/logs
+
+finetune_both_encoder_decoder: True
+continue_from: "/amax/home/chenqn/dev/Privacy_watermark/results/ckpt/privacy_watermark/seanet_wm_speech/pth/multi_deocder-_ep_18_2024-12-04_10_08_07.pth"
+watermark:
+  length: 16
+
+
+crop:
+  prob: 0.4
+  shuffle_prob: 0.2
+  pad_prob: 0.2  # shuffle_prob + pad_prob + prob <= 1
+  size: 0.5
+  max_n_windows: 5
+
+optimize:
+  lr: 0.0005
+  lambda_wav: 0.01
+  lambda_loud: 100
+  lambda_msmel: 0.01
+  lambda_adv_g: 1
+  lambda_adv_g_map: 1
+  lambda_adv_d: 0.1
+  lambda_wm_det: 1
+  
+  batch_size: 10
+  step_size: 2000 # large value means do not decay
+  gamma: 0.98
+  betas: [0.9, 0.98]
+  eps: 0.000000001
+  weight_decay: 0.0
+  grad_clip_thresh: 1.0
+  grad_acc_step: 1
+  up_step: 4000
+  anneal_steps: [2000, 4000, 8000, 16000, 32000]
+  anneal_rate: 0.3
+  lr_disc: 0.00002
+  alpha: 10
+  train_size: 31000
+  
+iter:
+  finetune_epoch: 20
+  epoch: 200
+  # epoch: 100
+  save_step: 2000
+  save_circle: 1
+  show_circle: 100
+  val_circle: 100
+  steps_per_epoch: 2000

@@ -1,0 +1,9 @@
+dataset/LibriSpeech/**
+.hydra/**
+old_scripts/**
+outputs/**
+wandb/**
+**/__pycache__/**
+models/old_modules/**
+**.log
+**.wav

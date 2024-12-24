@@ -1,0 +1,15 @@
+defaults:
+  - basic
+
+
+# wandb
+project_name: "watermark"
+experiment_name: "original"
+scenario_name: "None"
+seed: 0
+
+path:
+  wm_speech: "./results/seanet_wm_speech"
+  ckpt: "./results/ckpt/privacy_watermark/seanet_wm_speech"
+
+logfile: 'training_seanet.log'

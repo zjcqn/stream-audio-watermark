@@ -1,0 +1,44 @@
+defaults:
+  - basic
+
+embedder: demucs
+detector: seanet_detector
+
+project_name: "stream_wm"
+experiment_name: ${embedder}-${detector}-loc-bit16
+scenario_name: "None"
+seed: 0
+
+path:
+  wm_speech: ./outputs/wav/${experiment_name}
+  ckpt: ./outputs/ckpt/${experiment_name}
+  log_dir: outputs/logs
+
+continue_from: False
+
+augmentation:
+  select_aug_mode: "none" 
+
+watermark:
+  msg_length: 16
+
+optimize:
+  batch_size: 16
+  lr: 0.0005
+  lambda_wav: 0.02
+  lambda_loud: 500
+  lambda_msmel: 0.005
+  lambda_adv_g: 5
+  lambda_adv_g_map: 1
+  lambda_adv_d: 5
+  lambda_wm_det: 10
+  lambda_wm_rec: 50
+
+
+iter:
+  finetune_epoch: 20
+  max_epoch: 200
+  save_sample_by_step: 500
+  steps_per_epoch: 1000
+  save_skpt_by_epoch: 1
+  eval_by_epoch: 1
