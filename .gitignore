@@ -7,3 +7,4 @@ wandb/**
 models/old_modules/**
 **.log
 **.wav
+**.ipynb
